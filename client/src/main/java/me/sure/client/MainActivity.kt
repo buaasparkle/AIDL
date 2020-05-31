@@ -50,14 +50,18 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
     }
 
     private fun testMath() {
+        Log.d(Tag.me, "[add] client thread: ${Thread.currentThread()}")
         val res = mathInterface?.add(1, 3)
         Log.d(Tag.me, "testMath: $res")
 
-        val point = mathInterface?.pointAdd(
-            Point().apply { x = 1; y = 2; },
-            Point().apply { x = 3; y = 4 }
-        )
-        Log.d(Tag.me, "test point add: $point")
+        Thread {
+            Log.d(Tag.me, "[point add] client thread: ${Thread.currentThread()}")
+            val point = mathInterface?.pointAdd(
+                Point().apply { x = 1; y = 2; },
+                Point().apply { x = 3; y = 4 }
+            )
+            Log.d(Tag.me, "test point add: $point")
+        }.start()
     }
 
     override fun onServiceDisconnected(name: ComponentName?) {

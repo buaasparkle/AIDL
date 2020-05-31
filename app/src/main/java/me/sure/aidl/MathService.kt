@@ -13,6 +13,7 @@ class MathService : Service() {
     private val mathBinder by lazy {
         object : IMath.Stub() {
             override fun pointAdd(a: Point?, b: Point?): Point {
+                Log.d(Tag.me, "[pointAdd] server thread: ${Thread.currentThread()}")
                 return Point().apply {
                     x = (a?.x ?: 0) + (b?.x ?: 0)
                     y = (a?.y ?: 0) + (b?.y ?: 0)
@@ -20,6 +21,7 @@ class MathService : Service() {
             }
 
             override fun add(a: Int, b: Int): Int {
+                Log.d(Tag.me, "[add] server thread: ${Thread.currentThread()}")
                 return a + b
             }
         }

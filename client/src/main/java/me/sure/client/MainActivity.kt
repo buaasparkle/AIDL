@@ -10,6 +10,7 @@ import android.os.IBinder
 import android.util.Log
 import android.widget.TextView
 import me.sure.mylib.IMath
+import me.sure.mylib.Point
 import me.sure.mylib.Tag
 
 class MainActivity : AppCompatActivity(), ServiceConnection {
@@ -51,10 +52,17 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
     private fun testMath() {
         val res = mathInterface?.add(1, 3)
         Log.d(Tag.me, "testMath: $res")
+
+        val point = mathInterface?.pointAdd(
+            Point().apply { x = 1; y = 2; },
+            Point().apply { x = 3; y = 4 }
+        )
+        Log.d(Tag.me, "test point add: $point")
     }
 
     override fun onServiceDisconnected(name: ComponentName?) {
         Log.d(Tag.me, "onServiceDisconnected: $name")
+        mathInterface = null
     }
 
     override fun onServiceConnected(name: ComponentName?, service: IBinder?) {

@@ -5,12 +5,20 @@ import android.content.Intent
 import android.os.IBinder
 import android.util.Log
 import me.sure.mylib.IMath
+import me.sure.mylib.Point
 import me.sure.mylib.Tag
 
 class MathService : Service() {
 
     private val mathBinder by lazy {
         object : IMath.Stub() {
+            override fun pointAdd(a: Point?, b: Point?): Point {
+                return Point().apply {
+                    x = (a?.x ?: 0) + (b?.x ?: 0)
+                    y = (a?.y ?: 0) + (b?.y ?: 0)
+                }
+            }
+
             override fun add(a: Int, b: Int): Int {
                 return a + b
             }
